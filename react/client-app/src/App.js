@@ -1,9 +1,9 @@
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import LoginHome from './pages/LoginHome'
-import Home from './pages/Home'
-import Products from './pages/Products'
-import Login from './pages/Login'
+import LoginHome from '../../../../../SWEN400-2024F-SW-Doc2/react/client-app/src/pages/LoginHome'
+import Home from '../../../../../SWEN400-2024F-SW-Doc2/react/client-app/src/pages/Home'
+import Registration from '../../../../../SWEN400-2024F-SW-Doc2/react/client-app/src/pages/Registration'
+import Login from '../../../../../SWEN400-2024F-SW-Doc2/react/client-app/src/pages/Login'
 import PrivateRoutes from './utils/PrivateRoutes'
 import { useEffect } from 'react';
 
@@ -19,9 +19,9 @@ function App() {
           <Routes>
             <Route element={<PrivateRoutes />}>
                 <Route element={<LoginHome/>} path="/home" exact/>
-                <Route element={<Products/>} path="/products"/>
+                <Route element={<Registration/>} path="/registration"/>
             </Route>
-            <Route element={<Home/>} path="/"/>
+            <Route element={<Registration/>} path="/registration"/>
             <Route element={<Login/>} path="/login"/>
           </Routes>
       </Router>
@@ -30,4 +30,3 @@ function App() {
 }
 
 export default App;
-
