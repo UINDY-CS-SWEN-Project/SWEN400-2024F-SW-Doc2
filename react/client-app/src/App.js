@@ -1,6 +1,5 @@
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import LoginHome from './pages/LoginHome'; 
 import Home from './pages/Home'; 
 import Registration from './pages/Registration'; 
 import Login from './pages/Login'; 
@@ -19,7 +18,7 @@ function App() {
       <Router>
         <Routes>
           <Route element={<PrivateRoutes />}>
-            <Route element={<LoginHome />} path="/home" />
+            <Route element={<Home />} path="/home" />
           </Route>
           <Route element={<Registration />} path="/registration" />
           <Route element={<Login />} path="/login" />

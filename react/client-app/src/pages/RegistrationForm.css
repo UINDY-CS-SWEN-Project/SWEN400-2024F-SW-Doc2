@@ -25,13 +25,19 @@ form{
     height: 64px;
     box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.2), 0 0 20px 0 rgba(0, 0, 0, 0.19);
 }
-.text_input{
+.text_input {
     margin-top: 1.2rem;
     font-family: 'Montserrat regular';
     font-size: 20px;
-    border: none;
+    border: 2px solid #f13b1b; /* Border color */
     width: 80%;
+    height: 100%; /* Ensure it fills the text area */
+    border-radius: 22px; /* Match the text area */
+    padding: 10px; /* Add padding for better appearance */
+    background-color: #f9f9f9; /* Input background color */
+    color: #333; /* Text color */
 }
+
 .btn{
     margin-top: 28px;
     width: 165px;

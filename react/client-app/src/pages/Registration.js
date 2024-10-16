@@ -5,27 +5,20 @@ class Registration extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: 'Username',
-      password: 'Password',
-      name: 'Name',
-      email: 'Email',
+      username: 'Enter Username',
+      password: 'Enter Password',
+      name: 'Enter Name',
+      email: 'Enter Email',
     };
   }
 
   handleInputChange = (event) => {
-    const target = event.target;
-    const value = target.value;
-    const name = target.name;
-
-    if (name === "password") {
-      document.getElementById(name).type = "password";
-    }
+    const { name, value } = event.target;
 
     this.setState({
-      [name]: value
+      [name]: value,
     });
-
-    document.getElementById(name).style.fontFamily = "Montserrat black";
+    document.getElementById(name).style.fontFamily = 'Montserrat black';
   };
 
   setEmptyValue = (event) => {
@@ -35,7 +28,31 @@ class Registration extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    // Submit form logic here
+
+    const userData = {
+      username: this.state.username,
+      password: this.state.password,
+      name: this.state.name,
+      email: this.state.email
+    };
+
+    fetch('http://localhost:9091/api/register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(userData),
+    })
+    .then(response => {
+      return response.json();
+    })
+    .then(data => {
+      console.log('Success:', data);
+      window.location.href = '/home';
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
   };
 
   render() {
@@ -48,9 +65,10 @@ class Registration extends Component {
               type="text"
               id="username"
               name="username"
-              defaultValue={this.state.username}
+              value={this.state.username}
               onChange={this.handleInputChange}
               onFocus={this.setEmptyValue}
+              required
               className="text_input"
             />
           </div>
@@ -59,32 +77,35 @@ class Registration extends Component {
               type="text"
               id="name"
               name="name"
-              defaultValue={this.state.name}
+              value={this.state.name}
               onChange={this.handleInputChange}
               onFocus={this.setEmptyValue}
+              required
               className="text_input"
             />
           </div>
           <div className="text_area">
             <input
-              type="text"
+              type="password" 
               id="password"
               name="password"
-              defaultValue={this.state.password}
+              value={this.state.password}
               onChange={this.handleInputChange}
               onFocus={this.setEmptyValue}
+              required
               className="text_input"
             />
           </div>
           <div className="text_area">
             <input
-              type="text"
+              type="email" 
               id="email"
               name="email"
-              defaultValue={this.state.email}
+              value={this.state.email}
               onChange={this.handleInputChange}
               onFocus={this.setEmptyValue}
               className="text_input"
+              required
             />
           </div>
           <input type="submit" value="SIGN UP" className="btn" />
