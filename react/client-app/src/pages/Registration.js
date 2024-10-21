@@ -13,11 +13,18 @@ class Registration extends Component {
   }
 
   handleInputChange = (event) => {
-    const { name, value } = event.target;
+    const target = event.target;
+    let value = target.value;
+    const name = target.name;
+
+    if (name === 'password') {
+      document.getElementById(name).type = 'password';
+    }
 
     this.setState({
       [name]: value,
     });
+
     document.getElementById(name).style.fontFamily = 'Montserrat black';
   };
 
@@ -28,14 +35,14 @@ class Registration extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-
+  
     const userData = {
       username: this.state.username,
       password: this.state.password,
       name: this.state.name,
-      email: this.state.email
+      email: this.state.email,
     };
-
+  
     fetch('http://localhost:9091/api/register', {
       method: 'POST',
       headers: {
@@ -43,17 +50,19 @@ class Registration extends Component {
       },
       body: JSON.stringify(userData),
     })
-    .then(response => {
-      return response.json();
-    })
-    .then(data => {
-      console.log('Success:', data);
-      window.location.href = '/home';
-    })
-    .catch((error) => {
-      console.error('Error:', error);
-    });
+      .then(response => response.json())
+      .then(data => {
+        if (data.message === "User registered successfully!") {
+          window.location.replace('/home');
+        } else {
+          console.log('Registration failed:', data.message);
+        }
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
   };
+  
 
   render() {
     return (

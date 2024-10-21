@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import "./Login.css";
 import { Link } from 'react-router-dom';
 
-
 class Login extends Component {
   constructor(props) {
     super(props);
@@ -35,7 +34,34 @@ class Login extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    // Form submit logic here
+
+    const userData = {
+      username: this.state.username,
+      password: this.state.password,
+      name: this.state.name,
+      email: this.state.email
+    };
+
+    fetch('http://localhost:9091/api/authorizeUser', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(userData),
+    })
+    .then(response => {
+      return response.json();
+    })
+    .then(data => {
+      if (data.success) {  
+        window.location.replace('/home');
+      } else {
+        console.log('Login Failed:', data.message);
+      }
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
   };
 
   render() {
@@ -73,7 +99,7 @@ class Login extends Component {
   }
 }
 
-const Home = () => { // Changed to "Home"
+const Home = () => { 
   return (
     <div>
       <h1>Home</h1>
@@ -81,4 +107,4 @@ const Home = () => { // Changed to "Home"
   );
 };
 
-export default Login; // Exporting only the Login class component
+export default Login;

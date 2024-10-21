@@ -50,10 +50,31 @@ def db():
 @app.route('/api/register', methods=['POST'])
 def register():
     user_data = request.json
-    with open('user_data.pkl', 'wb') as f:
-        pickle.dump(user_data, f)
+    
+    print("Incoming user_data:", user_data)
+    print("Type of user_data:", type(user_data))
+    
+    try:
+        try:
+            with open('user_data.pkl', 'rb') as f:
+                all_users = pickle.load(f)
+        except FileNotFoundError:
+            all_users = []
 
-    return jsonify({"message": "User data saved successfully!"}), 200
+        if any(user['username'] == user_data['username'] for user in all_users):
+            return jsonify({"message": "Username already exists!"}), 409
+        
+        all_users.append(user_data)
+        
+        with open('user_data.pkl', 'wb') as f:
+            pickle.dump(all_users, f)
+
+        return jsonify({"message": "User registered successfully!"}), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e), "message": "An error occurred during registration."}), 500
+
+
 
 
 @app.route('/api/authorizeUser', methods=['POST'])
@@ -64,15 +85,20 @@ def authorizeUser():
     
     try:
         with open('user_data.pkl', 'rb') as f:
-            stored_data = pickle.load(f)
-            
-        if stored_data['username'] == username and stored_data['password'] == password:
-            return jsonify({"successs": True, "message": "Authorization successfull"}), 200
-        else:
-            return jsonify({"successs": False, "message": "Invalid Username or Password"}), 401
-        
-    except: 
-        return jsonify({"successs":False}), 401
+            all_users = pickle.load(f)
+
+        for user in all_users:
+            if user['username'] == username and user['password'] == password:
+                return jsonify({"success": True, "message": "Authorization successful"}), 200
+
+        return jsonify({"success": False, "message": "Invalid Username or Password"}), 401
+
+    except FileNotFoundError:
+        return jsonify({"success": False, "message": "No registered users found"}), 404
+
+    except Exception as e:
+        return jsonify({"error": str(e), "message": "An error occurred during authorization."}), 500
+
 
     
 
