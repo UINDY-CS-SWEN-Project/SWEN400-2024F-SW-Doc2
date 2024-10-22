@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+
 import "./RegistrationForm.css";
 
 class Registration extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: 'Enter Username',
-      password: 'Enter Password',
-      name: 'Enter Name',
-      email: 'Enter Email',
+      username: '',
+      password: '',
+      name: '',
+      email: '',
     };
   }
 
@@ -74,6 +76,7 @@ class Registration extends Component {
               type="text"
               id="username"
               name="username"
+              placeholder="Enter your username"
               value={this.state.username}
               onChange={this.handleInputChange}
               onFocus={this.setEmptyValue}
@@ -86,6 +89,7 @@ class Registration extends Component {
               type="text"
               id="name"
               name="name"
+              placeholder="Enter your name"
               value={this.state.name}
               onChange={this.handleInputChange}
               onFocus={this.setEmptyValue}
@@ -98,6 +102,7 @@ class Registration extends Component {
               type="password" 
               id="password"
               name="password"
+              placeholder="Enter your password"
               value={this.state.password}
               onChange={this.handleInputChange}
               onFocus={this.setEmptyValue}
@@ -110,6 +115,7 @@ class Registration extends Component {
               type="email" 
               id="email"
               name="email"
+              placeholder="Enter your password"
               value={this.state.email}
               onChange={this.handleInputChange}
               onFocus={this.setEmptyValue}
@@ -119,6 +125,7 @@ class Registration extends Component {
           </div>
           <input type="submit" value="SIGN UP" className="btn" />
         </form>
+        <Link className="link" to="/login">Back to Login</Link>
       </div>
     );
   }

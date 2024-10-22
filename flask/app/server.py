@@ -100,6 +100,52 @@ def authorizeUser():
         return jsonify({"error": str(e), "message": "An error occurred during authorization."}), 500
 
 
+@app.route('/api/createTeam', methods=['POST'])
+def createTeam():
+    team_data = request.json
+    
+    try:
+        try:
+            with open('team_data.pkl', 'rb') as f:
+                all_teams = pickle.load(f)
+        except FileNotFoundError:
+            all_teams = []
+
+        if any(team["teamName"] == team_data["teamName"] for team in all_teams):
+            return jsonify({"message": "Team name already exists!"}), 409
+        
+        all_teams.append(team_data)
+        print(all_teams)
+        with open('team_data.pkl', 'wb') as f:
+            pickle.dump(all_teams, f)
+
+        return jsonify({"message": "Team created successfully!"}), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e), "message": "An error occurred during team creation."}), 500
+
+@app.route('/api/getTeams', methods=['GET'])
+def getTeams():
+    user_data = request.json
+    username = user_data.get('username')
+    curr_teams = []
+    
+    try:
+        try:
+            with open('team_data.pkl', 'rb') as f:
+                all_teams = pickle.load(f)
+        except FileNotFoundError:
+            return jsonify({"message": "No teams are created!"}), 409
+
+        for team in all_teams:
+            if team['username'] == username:
+                curr_teams.append(team)
+
+        return jsonify(curr_teams)
+
+    except Exception as e:
+        return jsonify({"error": str(e), "message": "An error occurred during user in team search."}), 500
+
     
 
 if __name__ == "__main__":

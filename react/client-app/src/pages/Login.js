@@ -6,8 +6,8 @@ class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: 'username',
-      password: 'password',
+      username: '',
+      password: '',
     };
   }
 
@@ -38,8 +38,6 @@ class Login extends Component {
     const userData = {
       username: this.state.username,
       password: this.state.password,
-      name: this.state.name,
-      email: this.state.email
     };
 
     fetch('http://localhost:9091/api/authorizeUser', {
@@ -54,6 +52,7 @@ class Login extends Component {
     })
     .then(data => {
       if (data.success) {  
+        localStorage.setItem('username', this.state.username);
         window.location.replace('/home');
       } else {
         console.log('Login Failed:', data.message);
@@ -74,6 +73,7 @@ class Login extends Component {
               type="text"
               id="username"
               name="username"
+              placeholder="Enter your username"
               defaultValue={this.state.username}
               onChange={this.handleInputChange}
               onFocus={this.setEmptyValue}
@@ -85,6 +85,7 @@ class Login extends Component {
               type="text"
               id="password"
               name="password"
+              placeholder="Enter your password"
               defaultValue={this.state.password}
               onChange={this.handleInputChange}
               onFocus={this.setEmptyValue}
@@ -99,12 +100,5 @@ class Login extends Component {
   }
 }
 
-const Home = () => { 
-  return (
-    <div>
-      <h1>Home</h1>
-    </div>
-  );
-};
 
 export default Login;
