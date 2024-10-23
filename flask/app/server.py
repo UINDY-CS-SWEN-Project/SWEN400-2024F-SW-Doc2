@@ -64,6 +64,7 @@ def register():
         if any(user['username'] == user_data['username'] for user in all_users):
             return jsonify({"message": "Username already exists!"}), 409
         
+        
         all_users.append(user_data)
         
         with open('user_data.pkl', 'wb') as f:
