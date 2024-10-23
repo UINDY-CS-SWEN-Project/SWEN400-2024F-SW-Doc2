@@ -56,6 +56,7 @@ class Login extends Component {
         window.location.replace('/home');
       } else {
         console.log('Login Failed:', data.message);
+        alert("Login failed, invalid username/password")
       }
     })
     .catch((error) => {

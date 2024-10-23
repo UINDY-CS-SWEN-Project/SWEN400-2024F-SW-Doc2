@@ -44,7 +44,7 @@ class Teams extends Component {
     event.preventDefault();
 
     if (event.nativeEvent.submitter.value === "Create Team") {
-      const{teamMembs} = this.state;
+      const{teamMembs, teamMembsPermission} = this.state;
       if (teamMembs.length === 0) {
         console.log("Must have at least one member in the team!");
         alert("Must have at least one member in the team!");
@@ -66,6 +66,9 @@ class Teams extends Component {
         .then(data => {
           if (data.message === "Team created successfully!") {
             console.log('Team Creation Success:', data.message);
+            alert("Team created succesfully");
+            teamMembsPermission = [];
+            teamMembs = [];
           } else {
             console.log('Team Creation Failed:', data.message);
           }

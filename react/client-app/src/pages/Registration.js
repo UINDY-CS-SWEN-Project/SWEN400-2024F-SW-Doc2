@@ -54,10 +54,15 @@ class Registration extends Component {
     })
       .then(response => response.json())
       .then(data => {
-        if (data.message === "User registered successfully!") {
+        if (data.message == "User registered successfully!") {
           window.location.replace('/home');
-        } else {
+        } 
+        else if (data.message == "Username already exists!!") {
+          alert("Username already exists");
+        } 
+        else {
           console.log('Registration failed:', data.message);
+          alert("registration failed");
         }
       })
       .catch((error) => {
@@ -115,7 +120,7 @@ class Registration extends Component {
               type="email" 
               id="email"
               name="email"
-              placeholder="Enter your password"
+              placeholder="Enter your email"
               value={this.state.email}
               onChange={this.handleInputChange}
               onFocus={this.setEmptyValue}
@@ -125,7 +130,6 @@ class Registration extends Component {
           </div>
           <input type="submit" value="SIGN UP" className="btn" />
         </form>
-        <Link className="link" to="/login">Back to Login</Link>
       </div>
     );
   }
