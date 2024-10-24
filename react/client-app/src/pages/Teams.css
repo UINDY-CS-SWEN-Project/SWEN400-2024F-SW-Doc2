@@ -69,4 +69,22 @@ form{
     text-decoration: none;
     margin-top: 20px;
 }
+.team-table {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  .team-table table {
+    border-collapse: collapse;
+    width: 80%;
+  }
+  .team-table th,
+  .team-table td {
+    border: 1px solid #000;
+    padding: 8px; 
+    text-align: center;
+  }  
+  .team-table th {
+    background-color: #8d8a8abe;
+  }
 
