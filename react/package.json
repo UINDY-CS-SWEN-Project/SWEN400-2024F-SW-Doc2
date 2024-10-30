@@ -12,7 +12,9 @@
       "web-vitals": "^2.1.4",
       "axios": "0.18.0",
       "react-router-dom": "^6.3.0",
-      "create-react-app": "5.0.1"
+      "create-react-app": "5.0.1",
+      "@ckeditor/ckeditor5-react":"9.3.1",
+      "ckeditor5":"43.2.0"
     },
     "scripts": {
       "start": "react-scripts start",
