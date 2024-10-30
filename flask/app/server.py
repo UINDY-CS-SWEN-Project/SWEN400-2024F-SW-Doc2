@@ -172,6 +172,30 @@ def saveText():
     except Exception as e:
         return jsonify({"error": str(e), "message": "An error occurred during text saving."}), 500
     
+    
+@app.route('/api/getSavedDocuments', methods=['GET'])
+def getSavedDocuments():
+    user_data = request.json
+    username = user_data.get('username')
+    curr_docs = []
+    
+    try:
+        try:
+            with open('saveText.pkl', 'rb') as f:
+                all_docs = pickle.load(f)
+        except FileNotFoundError:
+            return jsonify({"message": "No documents are created!"}), 409
+
+        for doc in all_docs:
+            if doc['username'] == username:
+                curr_docs.append(doc['content'])
+
+        return jsonify(curr_docs)
+
+    except Exception as e:
+        return jsonify({"error": str(e), "message": "An error occurred during document search."}), 500
+
+    
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=os.environ.get("FLASK_SERVER_PORT", 9090), debug=True)

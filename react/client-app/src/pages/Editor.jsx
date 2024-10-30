@@ -143,15 +143,19 @@ export default function Editor() {
 
 	const handleSave = () => {
 		if (editorRef.current) {
+			const userID = localStorage.getItem('username')
 			const data = editorRef.current.editor.getData();
-			const jsonData = JSON.stringify({ content: data });
-			console.log(jsonData); 
+			const dataToSend = {
+				username: userID,
+				content: data,
+			}
+			console.log(JSON.stringify(dataToSend)); 
 			fetch('http://localhost:9091/api/saveText', {
 				method: 'POST',
 				headers: {
 				  'Content-Type': 'application/json',
 				},
-				body: jsonData,
+				body: JSON.stringify(dataToSend),
 			  })
 				.then(response => response.json())
 				.then(data => {
