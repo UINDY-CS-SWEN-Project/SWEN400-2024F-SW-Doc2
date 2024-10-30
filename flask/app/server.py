@@ -147,6 +147,30 @@ def getTeams():
     except Exception as e:
         return jsonify({"error": str(e), "message": "An error occurred during user in team search."}), 500
 
+
+@app.route('/api/saveText', methods=['POST'])
+def saveText():
+    save_data = request.json
+    
+    print("Incoming save:", save_data)
+    print("Type of save:", type(save_data))
+    
+    try:
+        try:
+            with open('saveText.pkl', 'rb') as f:
+                textToSave = pickle.load(f)
+        except FileNotFoundError:
+            textToSave = []
+        
+        textToSave.append(save_data)
+        
+        with open('saveText.pkl', 'wb') as f:
+            pickle.dump(textToSave, f)
+
+        return jsonify({"message": "Text saved successfully!"}), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e), "message": "An error occurred during text saving."}), 500
     
 
 if __name__ == "__main__":

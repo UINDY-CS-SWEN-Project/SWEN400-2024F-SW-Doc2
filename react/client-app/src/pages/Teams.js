@@ -64,7 +64,7 @@ class Teams extends Component {
       })
         .then(response => response.json())
         .then(data => {
-          if (data.message == "Team created successfully!") {
+          if (data.message === "Team created successfully!") {
             console.log('Team Creation Success:', data.message);
             alert("Team created succesfully");
             teamMembsPermission = [];
@@ -77,7 +77,7 @@ class Teams extends Component {
         .catch((error) => {
           console.error('Error:', error);
         });
-    } else if (event.nativeEvent.submitter.value == "Add Team Member") {
+    } else if (event.nativeEvent.submitter.value === "Add Team Member") {
       const {userNameToAdd, teamMembs} = this.state; 
       if (teamMembs.includes(userNameToAdd)) {
         console.log("This user is already a team member!");

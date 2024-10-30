@@ -54,10 +54,10 @@ class Registration extends Component {
     })
       .then(response => response.json())
       .then(data => {
-        if (data.message == "User registered successfully!") {
+        if (data.message === "User registered successfully!") {
           window.location.replace('/home');
         } 
-        else if (data.message == "Username already exists!!") {
+        else if (data.message === "Username already exists!!") {
           alert("Username already exists");
         } 
         else {
