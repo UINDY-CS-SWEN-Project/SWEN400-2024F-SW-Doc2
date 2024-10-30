@@ -40,7 +40,7 @@ class Home extends Component {
           </text>
           <div className="text_area">
           </div>
-          <input type="submit" value="Edit Documents" className="btn" />
+          <Link className="link" to="/editor">Document Editor</Link>
         </body>
       </div>
     );

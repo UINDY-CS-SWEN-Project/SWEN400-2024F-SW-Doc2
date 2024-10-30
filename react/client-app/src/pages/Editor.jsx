@@ -2,68 +2,20 @@ import { useState, useEffect, useRef } from 'react';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 
 import {
-	DecoupledEditor,
+	ClassicEditor,
 	AccessibilityHelp,
-	Alignment,
-	Autoformat,
-	AutoImage,
 	AutoLink,
 	Autosave,
-	BalloonToolbar,
 	Bold,
-	Code,
 	Essentials,
-	FindAndReplace,
-	FontBackgroundColor,
-	FontColor,
-	FontFamily,
-	FontSize,
 	Heading,
-	HorizontalLine,
-	ImageBlock,
-	ImageCaption,
-	ImageInline,
-	ImageInsert,
-	ImageInsertViaUrl,
-	ImageResize,
-	ImageStyle,
-	ImageTextAlternative,
-	ImageToolbar,
-	ImageUpload,
 	Indent,
 	IndentBlock,
 	Italic,
 	Link,
-	LinkImage,
 	List,
-	ListProperties,
-	Markdown,
-	MediaEmbed,
-	Mention,
-	PageBreak,
 	Paragraph,
-	PasteFromMarkdownExperimental,
-	PasteFromOffice,
-	RemoveFormat,
 	SelectAll,
-	SimpleUploadAdapter,
-	SpecialCharacters,
-	SpecialCharactersArrows,
-	SpecialCharactersCurrency,
-	SpecialCharactersEssentials,
-	SpecialCharactersLatin,
-	SpecialCharactersMathematical,
-	SpecialCharactersText,
-	Strikethrough,
-	Subscript,
-	Superscript,
-	Table,
-	TableCaption,
-	TableCellProperties,
-	TableColumnResize,
-	TableProperties,
-	TableToolbar,
-	TextTransformation,
 	Title,
 	TodoList,
 	Underline,
@@ -76,8 +28,6 @@ import './Editor.css';
 
 export default function Editor() {
 	const editorContainerRef = useRef(null);
-	const editorMenuBarRef = useRef(null);
-	const editorToolbarRef = useRef(null);
 	const editorRef = useRef(null);
 	const [isLayoutReady, setIsLayoutReady] = useState(false);
 
@@ -95,20 +45,11 @@ export default function Editor() {
 				'|',
 				'heading',
 				'|',
-				'fontSize',
-				'fontFamily',
-				'fontColor',
-				'fontBackgroundColor',
-				'|',
 				'bold',
 				'italic',
 				'underline',
 				'|',
 				'link',
-				'insertImage',
-				'insertTable',
-				'|',
-				'alignment',
 				'|',
 				'bulletedList',
 				'numberedList',
@@ -120,79 +61,23 @@ export default function Editor() {
 		},
 		plugins: [
 			AccessibilityHelp,
-			Alignment,
-			Autoformat,
-			AutoImage,
 			AutoLink,
 			Autosave,
-			BalloonToolbar,
 			Bold,
-			Code,
 			Essentials,
-			FindAndReplace,
-			FontBackgroundColor,
-			FontColor,
-			FontFamily,
-			FontSize,
 			Heading,
-			HorizontalLine,
-			ImageBlock,
-			ImageCaption,
-			ImageInline,
-			ImageInsert,
-			ImageInsertViaUrl,
-			ImageResize,
-			ImageStyle,
-			ImageTextAlternative,
-			ImageToolbar,
-			ImageUpload,
 			Indent,
 			IndentBlock,
 			Italic,
 			Link,
-			LinkImage,
 			List,
-			ListProperties,
-			Markdown,
-			MediaEmbed,
-			Mention,
-			PageBreak,
 			Paragraph,
-			PasteFromMarkdownExperimental,
-			PasteFromOffice,
-			RemoveFormat,
 			SelectAll,
-			SimpleUploadAdapter,
-			SpecialCharacters,
-			SpecialCharactersArrows,
-			SpecialCharactersCurrency,
-			SpecialCharactersEssentials,
-			SpecialCharactersLatin,
-			SpecialCharactersMathematical,
-			SpecialCharactersText,
-			Strikethrough,
-			Subscript,
-			Superscript,
-			Table,
-			TableCaption,
-			TableCellProperties,
-			TableColumnResize,
-			TableProperties,
-			TableToolbar,
-			TextTransformation,
 			Title,
 			TodoList,
 			Underline,
 			Undo
 		],
-		balloonToolbar: ['bold', 'italic', '|', 'link', 'insertImage', '|', 'bulletedList', 'numberedList'],
-		fontFamily: {
-			supportAllValues: true
-		},
-		fontSize: {
-			options: [10, 12, 14, 'default', 18, 20, 22],
-			supportAllValues: true
-		},
 		heading: {
 			options: [
 				{
@@ -238,18 +123,6 @@ export default function Editor() {
 				}
 			]
 		},
-		image: {
-			toolbar: [
-				'toggleImageCaption',
-				'imageTextAlternative',
-				'|',
-				'imageStyle:inline',
-				'imageStyle:wrapText',
-				'imageStyle:breakText',
-				'|',
-				'resizeImage'
-			]
-		},
 		initialData:
 			'<h2>Congratulations on setting up CKEditor 5! 🎉</h2>\n<p>\n    You\'ve successfully created a CKEditor 5 project. This powerful text editor will enhance your application, enabling rich text editing\n    capabilities that are customizable and easy to use.\n</p>\n<h3>What\'s next?</h3>\n<ol>\n    <li>\n        <strong>Integrate into your app</strong>: time to bring the editing into your application. Take the code you created and add to your\n        application.\n    </li>\n    <li>\n        <strong>Explore features:</strong> Experiment with different plugins and toolbar options to discover what works best for your needs.\n    </li>\n    <li>\n        <strong>Customize your editor:</strong> Tailor the editor\'s configuration to match your application\'s style and requirements. Or even\n        write your plugin!\n    </li>\n</ol>\n<p>\n    Keep experimenting, and don\'t hesitate to push the boundaries of what you can achieve with CKEditor 5. Your feedback is invaluable to us\n    as we strive to improve and evolve. Happy editing!\n</p>\n<h3>Helpful resources</h3>\n<ul>\n    <li>📝 <a href="https://orders.ckeditor.com/trial/premium-features">Trial sign up</a>,</li>\n    <li>📕 <a href="https://ckeditor.com/docs/ckeditor5/latest/installation/index.html">Documentation</a>,</li>\n    <li>⭐️ <a href="https://github.com/ckeditor/ckeditor5">GitHub</a> (star us if you can!),</li>\n    <li>🏠 <a href="https://ckeditor.com">CKEditor Homepage</a>,</li>\n    <li>🧑‍💻 <a href="https://ckeditor.com/ckeditor-5/demo/">CKEditor 5 Demos</a>,</li>\n</ul>\n<h3>Need help?</h3>\n<p>\n    See this text, but the editor is not starting up? Check the browser\'s console for clues and guidance. It may be related to an incorrect\n    license key if you use premium features or another feature-related requirement. If you cannot make it work, file a GitHub issue, and we\n    will help as soon as possible!\n</p>\n',
 		link: {
@@ -265,57 +138,15 @@ export default function Editor() {
 				}
 			}
 		},
-		list: {
-			properties: {
-				styles: true,
-				startIndex: true,
-				reversed: true
-			}
-		},
-		mention: {
-			feeds: [
-				{
-					marker: '@',
-					feed: [
-						/* See: https://ckeditor.com/docs/ckeditor5/latest/features/mentions.html */
-					]
-				}
-			]
-		},
-		menuBar: {
-			isVisible: true
-		},
-		placeholder: 'Type or paste your content here!',
-		table: {
-			contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells', 'tableProperties', 'tableCellProperties']
-		}
+		placeholder: 'Type or paste your content here!'
 	};
 
 	return (
 		<div>
 			<div className="main-container">
-				<div className="editor-container editor-container_document-editor" ref={editorContainerRef}>
-					<div className="editor-container__menu-bar" ref={editorMenuBarRef}></div>
-					<div className="editor-container__toolbar" ref={editorToolbarRef}></div>
-					<div className="editor-container__editor-wrapper">
-						<div className="editor-container__editor">
-							<div ref={editorRef}>
-								{isLayoutReady && (
-									<CKEditor
-										onReady={editor => {
-											editorToolbarRef.current.appendChild(editor.ui.view.toolbar.element);
-											editorMenuBarRef.current.appendChild(editor.ui.view.menuBarView.element);
-										}}
-										onAfterDestroy={() => {
-											Array.from(editorToolbarRef.current.children).forEach(child => child.remove());
-											Array.from(editorMenuBarRef.current.children).forEach(child => child.remove());
-										}}
-										editor={DecoupledEditor}
-										config={editorConfig}
-									/>
-								)}
-							</div>
-						</div>
+				<div className="editor-container editor-container_classic-editor" ref={editorContainerRef}>
+					<div className="editor-container__editor">
+						<div ref={editorRef}>{isLayoutReady && <CKEditor editor={ClassicEditor} config={editorConfig} />}</div>
 					</div>
 				</div>
 			</div>
