@@ -32,10 +32,6 @@ class Teams extends Component {
     document.getElementById(name).style.fontFamily = 'Montserrat black';
   };
 
-  setEmptyValue = (event) => {
-    
-  };
-
   handleCheckboxChange = (event) => {
     this.setState({ isChecked: event.target.checked });
   };
@@ -44,7 +40,7 @@ class Teams extends Component {
     event.preventDefault();
 
     if (event.nativeEvent.submitter.value === "Create Team") {
-      const{teamMembs, teamMembsPermission} = this.state;
+      const {teamMembs, teamMembsPermission} = this.state;
       if (teamMembs.length === 0) {
         console.log("Must have at least one member in the team!");
         alert("Must have at least one member in the team!");
@@ -53,7 +49,7 @@ class Teams extends Component {
       const userData = {
         teamName: this.state.teamName,
         MembsUserName: teamMembs,
-        MembsPermiss: this.state.teamMembsPermission,
+        MembsPermiss: teamMembsPermission,
       };
       fetch('http://localhost:9091/api/createTeam', {
         method: 'POST',
@@ -66,12 +62,15 @@ class Teams extends Component {
         .then(data => {
           if (data.message === "Team created successfully!") {
             console.log('Team Creation Success:', data.message);
-            alert("Team created succesfully");
-            teamMembsPermission = [];
-            teamMembs = [];
+            alert("Team created successfully");
+            this.setState({
+              teamMembs: [],
+              teamMembsPermission: [],
+              teamName: ''
+            });
           } else {
             console.log('Team Creation Failed:', data.message);
-            alert("Team creation failed!")
+            alert("Team creation failed!");
           }
         })
         .catch((error) => {
@@ -124,8 +123,8 @@ class Teams extends Component {
                 type="checkbox"
                 checked={this.state.isChecked}
                 onChange={this.handleCheckboxChange}
-                />
-                Allow Admin Control?
+              />
+              Allow Admin Control?
             </label>
           </div>
           <div>
@@ -133,6 +132,29 @@ class Teams extends Component {
           <input type="submit" value="Add Team Member" className="btn" />
           <input type="submit" value="Create Team" className="btn" />
         </form>
+        {this.state.teamName && this.state.teamMembs.length > 0 && (
+          <div className="team-table">
+          <table>
+            <thead>
+              <tr>
+                <th colSpan="2">{this.state.teamName}</th>
+              </tr>
+              <tr>
+                <th>Member Username</th>
+                <th>Admin Privilege</th>
+              </tr>
+            </thead>
+              <tbody>
+                {this.state.teamMembs.map((member, index) => (
+                  <tr key={index}>
+                    <td>{member}</td>
+                    <td>{this.state.teamMembsPermission[index] ? "Yes" : "No"}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
       </div>
     );
   }
