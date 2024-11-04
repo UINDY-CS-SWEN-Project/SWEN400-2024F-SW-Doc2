@@ -30,7 +30,7 @@ export default function Editor() {
 	const editorContainerRef = useRef(null);
 	const editorRef = useRef(null);
 	const [isLayoutReady, setIsLayoutReady] = useState(false);
-
+	const [docTitle, setDocTitle] = useState('');
 	useEffect(() => {
 		setIsLayoutReady(true);
 
@@ -147,6 +147,7 @@ export default function Editor() {
 			const data = editorRef.current.editor.getData();
 			const dataToSend = {
 				username: userID,
+				title: docTitle,
 				content: data,
 			}
 			console.log(JSON.stringify(dataToSend)); 
@@ -168,6 +169,8 @@ export default function Editor() {
 		}
 	};
 
+	const handleInputChange = (e) => setDocTitle(e.target.value);
+
 	return (
 		<div>
 			<div className="main-container">
@@ -184,6 +187,14 @@ export default function Editor() {
 						</div>
 					</div>
 				</div>
+				<input
+					type="text"
+					id="docTitle"
+					name="docTitle"
+					value={docTitle}
+					onChange={handleInputChange}
+					placeholder="Document Title"
+            	/>
 				<button onClick={handleSave}>Save</button>
 			</div>
 		</div>
