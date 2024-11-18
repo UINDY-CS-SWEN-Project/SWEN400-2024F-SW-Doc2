@@ -167,18 +167,42 @@ def saveText():
         with open('saveText.pkl', 'wb') as f:
             pickle.dump(textToSave, f)
 
-        return jsonify({"message": "Text saved successfully!"}), 200
+        return jsonify({"message": "Document saved successfully!"}), 200
 
     except Exception as e:
-        return jsonify({"error": str(e), "message": "An error occurred during text saving."}), 500
+        return jsonify({"error": str(e), "message": "An error occurred during Document saving."}), 500
+    
+@app.route('/api/saveTemplate', methods=['POST'])
+def saveTemplate():
+    save_data = request.json
+    
+    print("Incoming save:", save_data)
+    print("Type of save:", type(save_data))
+    
+    try:
+        try:
+            with open('saveTemplate.pkl', 'rb') as f:
+                templateToSave = pickle.load(f)
+        except FileNotFoundError:
+            templateToSave = []
+        
+        templateToSave.append(save_data)
+        
+        with open('saveTemplate.pkl', 'wb') as f:
+            pickle.dump(templateToSave, f)
+
+        return jsonify({"message": "Template saved successfully!"}), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e), "message": "An error occurred during template saving."}), 500
     
     
-@app.route('/api/getSavedDocuments', methods=['GET'])
+@app.route('/api/getSavedDocuments', methods=['POST'])
 def getSavedDocuments():
     user_data = request.json
     username = user_data.get('username')
     curr_docs = []
-    
+    all_docs = []
     try:
         try:
             with open('saveText.pkl', 'rb') as f:
@@ -188,13 +212,35 @@ def getSavedDocuments():
 
         for doc in all_docs:
             if doc['username'] == username:
-                curr_docs.append(doc['content'])
+                curr_docs.append({'title': doc.get('documentTitle'), 'content': doc.get('content')})
 
         return jsonify(curr_docs)
 
     except Exception as e:
         return jsonify({"error": str(e), "message": "An error occurred during document search."}), 500
 
+@app.route('/api/getSavedTemplates', methods=['POST'])
+def getSavedTemplates():
+    user_data = request.json
+    username = user_data.get('username')
+    curr_templs = []
+    all_templs = []
+    
+    try:
+        try:
+            with open('saveTemplate.pkl', 'rb') as f:
+                all_templs = pickle.load(f)
+        except FileNotFoundError:
+            return jsonify({"message": "No templates are created!"}), 409
+
+        for doc in all_templs:
+            if doc['username'] == username:
+                curr_templs.append({'title': doc.get('templateTitle'), 'content': doc.get('content')})
+
+        return jsonify(curr_templs)
+
+    except Exception as e:
+        return jsonify({"error": str(e), "message": "An error occurred during template search."}), 500
     
 
 if __name__ == "__main__":

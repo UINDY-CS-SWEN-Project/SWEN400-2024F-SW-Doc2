@@ -31,6 +31,7 @@ export default function Editor() {
 	const editorRef = useRef(null);
 	const [isLayoutReady, setIsLayoutReady] = useState(false);
 	const [docTitle, setDocTitle] = useState('');
+	const [templateTitle, setTemplateTitle] = useState('');
 	useEffect(() => {
 		setIsLayoutReady(true);
 
@@ -141,13 +142,13 @@ export default function Editor() {
 		placeholder: 'Type or paste your content here!'
 	};
 
-	const handleSave = () => {
+	const handleDocSave = () => {
 		if (editorRef.current) {
 			const userID = localStorage.getItem('username')
 			const data = editorRef.current.editor.getData();
 			const dataToSend = {
 				username: userID,
-				title: docTitle,
+				documentTitle: docTitle,
 				content: data,
 			}
 			console.log(JSON.stringify(dataToSend)); 
@@ -160,17 +161,44 @@ export default function Editor() {
 			  })
 				.then(response => response.json())
 				.then(data => {
-				  alert("Text saved succesfully")
+				  alert("Document saved succesfully")
 				})
 				.catch((error) => {
 				  console.error('Error:', error);
-				  alert("Error, did not save text")
+				  alert("Error, did not document text")
+				});
+		}
+	};
+	const handleTemplateSave = () => {
+		if (editorRef.current) {
+			const userID = localStorage.getItem('username')
+			const data = editorRef.current.editor.getData();
+			const dataToSend = {
+				username: userID,
+				templateTitle: templateTitle,
+				content: data,
+			}
+			console.log(JSON.stringify(dataToSend)); 
+			fetch('http://localhost:9091/api/saveTemplate', {
+				method: 'POST',
+				headers: {
+				  'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(dataToSend),
+			  })
+				.then(response => response.json())
+				.then(data => {
+				  alert("Template saved succesfully")
+				})
+				.catch((error) => {
+				  console.error('Error:', error);
+				  alert("Error, did not save template")
 				});
 		}
 	};
 
-	const handleInputChange = (e) => setDocTitle(e.target.value);
-
+	const handleInputChangeDocTitle = (e) => setDocTitle(e.target.value);
+	const handleInputChangeTemplateTitle = (e) => setTemplateTitle(e.target.value);
 	return (
 		<div>
 			<div className="main-container">
@@ -192,10 +220,19 @@ export default function Editor() {
 					id="docTitle"
 					name="docTitle"
 					value={docTitle}
-					onChange={handleInputChange}
+					onChange={handleInputChangeDocTitle}
 					placeholder="Document Title"
             	/>
-				<button onClick={handleSave}>Save</button>
+				<button onClick={handleDocSave}>Save Document</button>
+				<input
+					type="text"
+					id="templateTitle"
+					name="templateTitle"
+					value={templateTitle}
+					onChange={handleInputChangeTemplateTitle}
+					placeholder="Template Title"
+            	/>
+				<button onClick={handleTemplateSave}>Save Template</button>
 			</div>
 		</div>
 	);
