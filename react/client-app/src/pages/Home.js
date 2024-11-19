@@ -12,7 +12,7 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    const username = localStorage.getItem('username'); // Assuming username is stored in localStorage
+    const username = localStorage.getItem('username'); 
     fetch('http://localhost:9091/api/getSavedTemplates', {
       method: 'POST',
       headers: {
@@ -56,13 +56,18 @@ class Home extends Component {
   }
 
   handleTemplateClick = (content) => {
-    localStorage.setItem('selectedTemplate', content); 
+    localStorage.setItem('selectedData', JSON.stringify(content)); 
     window.location.href = '/editor'; 
   };
   handleDocumentClick = (content) => {
-    localStorage.setItem('selectedDocument', content); 
+    localStorage.setItem('selectedData', JSON.stringify(content)); 
     window.location.href = '/editor'; 
   };
+  handleLogout = () =>{
+    localStorage.setItem('username', '');
+    localStorage.setItem('isAuthenticated', false);
+    window.location.replace('/login');
+  }
 
   render() {
     const { templates } = this.state;
@@ -72,6 +77,9 @@ class Home extends Component {
       <div className="Home">
         <header>
           <h1>Welcome</h1>
+          <button className="logout-button" onClick={() => this.handleLogout()}>
+            Logout
+          </button>
         </header>
         <div>
           <h2>Templates</h2>
@@ -110,6 +118,7 @@ class Home extends Component {
           </ul>
         </div>
         <Link className="link" to="/editor">New Document</Link>
+        <Link className="link" to="/teams">Teams</Link>
       </div>
     );
   }
