@@ -125,7 +125,7 @@ def createTeam():
     except Exception as e:
         return jsonify({"error": str(e), "message": "An error occurred during team creation."}), 500
 
-@app.route('/api/getTeams', methods=['GET'])
+@app.route('/api/getTeams', methods=['POST'])
 def getTeams():
     user_data = request.json
     username = user_data.get('username')
@@ -146,7 +146,31 @@ def getTeams():
 
     except Exception as e:
         return jsonify({"error": str(e), "message": "An error occurred during user in team search."}), 500
+    
 
+@app.route('/api/removeUserFromTeam', methods=['POST'])
+def removeUserFromTeam():
+    user_data = request.json
+    username = user_data.get('username')
+    teamName = user_data.get('teamName')
+    all_teams = []
+    try:
+        try:
+            with open('team_data.pkl', 'rb') as f:
+                all_teams = pickle.load(f)
+        except FileNotFoundError:
+            return jsonify({"message": "No teams are created!"}), 409
+
+        for team in all_teams:
+            if team['teamName'] == teamName:
+                if username in team.get('members', []):
+                    team['members'].remove(username)
+                    with open('team_data.pkl', 'wb') as f:
+                        pickle.dump(all_teams, f)
+                    return jsonify({"message": f"User {username} removed from team {teamName}."}), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e), "message": "An error occurred during team member removal."}), 500
 
 @app.route('/api/saveText', methods=['POST'])
 def saveText():

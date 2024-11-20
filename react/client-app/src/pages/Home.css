@@ -27,7 +27,7 @@ form {
 .text_area {
     background: #999999;
     width: 100%;
-    height: 200px;
+    height: 100px;
     overflow-y: auto;
     overflow-x: hidden;
     border: 1px solid #ccc;
@@ -80,7 +80,7 @@ li {
 }
 
 .template-button {
-    background-color: linear-gradient(135deg, #f13b1b, #625050);
+    background-color: #f13b1b;
     color: white;
     border: none;
     padding: 10px 15px;
@@ -93,7 +93,7 @@ li {
 }
 
 .template-button:hover {
-    background-color: linear-gradient(135deg, #f13b1b, #625050);
+    background-color: #f13b1b;
 }
 
 .error-message {
