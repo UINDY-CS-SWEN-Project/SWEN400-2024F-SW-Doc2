@@ -66,7 +66,7 @@ export default function Editor() {
         { model: 'heading6', view: 'h6', title: 'Heading 6', class: 'ck-heading_heading6' }
       ]
     },
-    initialData: '<h2></h2>\n<p></p>\n',
+    initialData: '<p></p>\n',
     link: {
       addTargetToExternalLinks: true,
       defaultProtocol: 'https://',

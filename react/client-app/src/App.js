@@ -6,6 +6,7 @@ import Login from './pages/Login';
 import PrivateRoutes from './utils/PrivateRoutes'; 
 import Teams from './pages/Teams';
 import Editor from './pages/Editor';
+import EditTeam from './pages/EditTeam';
 import { useEffect } from 'react';
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
             <Route element={<Home />} path="/home" />
             <Route element={<Teams />} path="/teams" />
             <Route element={<Editor />} path="/editor" />
+            <Route element={<EditTeam />} path="/editteam" />
           </Route>
           <Route element={<Registration />} path="/registration" />
           <Route element={<Login />} path="/" />

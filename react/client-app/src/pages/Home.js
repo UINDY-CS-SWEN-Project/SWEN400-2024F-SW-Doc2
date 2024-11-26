@@ -119,6 +119,7 @@ class Home extends Component {
         </div>
         <Link className="link" to="/editor">New Document/Template</Link>
         <Link className="link" to="/teams">Teams</Link>
+        <Link className="link" to="/editteam">Edit Team</Link>
       </div>
     );
   }

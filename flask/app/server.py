@@ -151,9 +151,10 @@ def getTeams():
 @app.route('/api/removeUserFromTeam', methods=['POST'])
 def removeUserFromTeam():
     user_data = request.json
-    username = user_data.get('username')
+    membtoRemoveName = user_data.get('membtoRemoveName')
     teamName = user_data.get('teamName')
     all_teams = []
+    team_found = False
     try:
         try:
             with open('team_data.pkl', 'rb') as f:
@@ -163,12 +164,23 @@ def removeUserFromTeam():
 
         for team in all_teams:
             if team['teamName'] == teamName:
-                if username in team.get('members', []):
-                    team['members'].remove(username)
+                team_found = True
+                if not team.get('MembsUserName', []):
+                    return jsonify({"message": "No members in this team!"}), 404
+                if membtoRemoveName in team.get('MembsUserName', []):
+                    index = team['MembsUserName'].index(membtoRemoveName)
+                    team['MembsUserName'].pop(index)
+                    team['MembsPermiss'].pop(index)
+                    if not team['MembsUserName']:
+                        all_teams = [t for t in all_teams if t['teamName'] != teamName]
+                    print("Teams", all_teams)
                     with open('team_data.pkl', 'wb') as f:
                         pickle.dump(all_teams, f)
-                    return jsonify({"message": f"User {username} removed from team {teamName}."}), 200
-
+                    return jsonify({"message": f"User successfully removed from team."}), 200
+                else:
+                    return jsonify({"message": "User not found in team!"}), 404
+        if not team_found:
+            return jsonify({"message": "Team not found!"}), 404
     except Exception as e:
         return jsonify({"error": str(e), "message": "An error occurred during team member removal."}), 500
 

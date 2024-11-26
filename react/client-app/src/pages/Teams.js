@@ -68,6 +68,8 @@ class Teams extends Component {
               teamMembsPermission: [],
               teamName: ''
             });
+          } else if (data.message === "Team name already exists!") {
+            alert('Team name already taken!');
           } else {
             console.log('Team Creation Failed:', data.message);
             alert("Team creation failed!");
