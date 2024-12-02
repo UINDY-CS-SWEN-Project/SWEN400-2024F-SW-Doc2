@@ -8,6 +8,9 @@ class Home extends Component {
     this.state = {
       templates: [],
       textDocs: [],
+      searchFor: '',
+      filteredDocs: [],
+      filteredTempls:[],
     };
   }
 
@@ -68,10 +71,27 @@ class Home extends Component {
     localStorage.setItem('isAuthenticated', false);
     window.location.replace('/login');
   }
+  handleSearchInputChange = (event) =>{
+    this.setState({searchFor: event.target.value});
+  }
+
+  handleSearch = () =>{
+    const {textDocs, searchFor, templates} = this.state;
+    const filteredDocs = textDocs.filter((doc) => 
+    doc.title.toLowerCase().includes(searchFor.toLowerCase())
+    );
+    const filteredTemplates = templates.filter((template) => 
+      template.title.toLowerCase().includes(searchFor.toLowerCase())
+      );
+    this.setState({
+      filteredDocs: filteredDocs,
+      filteredTempls: filteredTemplates,
+    });
+  }
 
   render() {
-    const { templates } = this.state;
-    const { textDocs } = this.state;
+    const { templates, textDocs, searchFor, filteredDocs, filteredTempls } = this.state;
+    
 
     return (
       <div className="Home">
@@ -82,6 +102,47 @@ class Home extends Component {
           </button>
         </header>
         <div>
+          <h2>Search By Title (Documents and Templates)</h2>
+          <input 
+            type = "text"
+            value={searchFor}
+            onChange={this.handleSearchInputChange}
+            placeholder="Enter title to search for"
+          />
+          <button onClick={this.handleSearch}>Search</button>
+          <h2>Search Results</h2>
+          <ul>
+            {filteredDocs.length > 0 ? (
+              filteredDocs.map((doc, index) => (
+                <li key={index}>
+                  <button
+                    className="template-button"
+                    onClick={() => this.handleDocumentClick(doc.content)}
+                  >
+                    {doc.title}
+                  </button>
+                </li>
+              ))
+            ):(
+              <p>No matching documents found.</p>
+            )}
+
+            {filteredTempls.length > 0 ? (
+              filteredTempls.map((template, index) => (
+                <li key={index}>
+                  <button
+                    className="template-button"
+                    onClick={() => this.handleDocumentClick(template.content)}
+                  >
+                    {template.title}
+                  </button>
+                </li>
+              ))
+            ):(
+              <p>No matching templates found.</p>
+            )}
+            
+          </ul>
           <h2>Templates</h2>
           <ul>
             {templates.length > 0 ? (

@@ -63,7 +63,7 @@ class EditTeam extends Component {
                   alert("Team not found!");
                 }
                 else if (data.message === "User successfully removed from team & team is deleted.") {
-                  alert("Team is deleted!");
+                  alert("User successfully removed from team & team is deleted!");
                 }
                 else {
                   console.log('Removal failed:', data.message);

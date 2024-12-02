@@ -156,10 +156,10 @@ export default function Editor() {
 
                     const savedContent = localStorage.getItem('selectedData');
                     if (savedContent) {
-						const cleanContent = savedContent.replace(/^"|"$/g, '');
-      					editor.setData(cleanContent);
+						          const cleanContent = savedContent.replace(/^"|"$/g, '');
+      					      editor.setData(cleanContent);
                     }
-					savedContent = localStorage.setItem('selectedData', '');
+					          savedContent = localStorage.setItem('selectedData', '');
                   }}
                 />
               )}
