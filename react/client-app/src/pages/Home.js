@@ -143,7 +143,7 @@ class Home extends Component {
             )}
             
           </ul>
-          <h2>Templates</h2>
+          <h2>All Templates</h2>
           <ul>
             {templates.length > 0 ? (
               templates.map((doc, index) => (
@@ -160,7 +160,7 @@ class Home extends Component {
               <p>No templates found.</p>
             )}
           </ul>
-          <h2>Documents</h2>
+          <h2>All Documents</h2>
           <ul>
             {textDocs.length > 0 ? (
               textDocs.map((doc, index) => (
