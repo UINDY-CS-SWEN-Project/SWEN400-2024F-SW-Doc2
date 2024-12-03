@@ -105,11 +105,12 @@ class Home extends Component {
           <h2>Search By Title (Documents and Templates)</h2>
           <input 
             type = "text"
+            name = "TitleSearch"
             value={searchFor}
             onChange={this.handleSearchInputChange}
             placeholder="Enter title to search for"
           />
-          <button onClick={this.handleSearch}>Search</button>
+          <button className="DocSearchBtn" onClick={this.handleSearch}>Search</button>
           <h2>Search Results</h2>
           <ul>
             {filteredDocs.length > 0 ? (
