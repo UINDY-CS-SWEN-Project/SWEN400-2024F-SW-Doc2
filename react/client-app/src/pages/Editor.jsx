@@ -174,7 +174,7 @@ export default function Editor() {
           onChange={handleInputChangeDocTitle}
           placeholder="Document Title"
         />
-        <button onClick={handleDocSave}>Save Document</button>
+        <button name="DocSave" onClick={handleDocSave}>Save Document</button>
         <input
           type="text"
           id="templateTitle"
@@ -183,7 +183,7 @@ export default function Editor() {
           onChange={handleInputChangeTemplateTitle}
           placeholder="Template Title"
         />
-        <button onClick={handleTemplateSave}>Save Template</button>
+        <button name="TemplateSave" onClick={handleTemplateSave}>Save Template</button>
       </div>
     </div>
   );

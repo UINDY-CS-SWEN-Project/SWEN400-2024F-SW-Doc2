@@ -122,6 +122,7 @@ class Teams extends Component {
             />
             <label>
               <input
+                name="checkbox"
                 type="checkbox"
                 checked={this.state.isChecked}
                 onChange={this.handleCheckboxChange}
@@ -131,8 +132,8 @@ class Teams extends Component {
           </div>
           <div>
           </div>
-          <input type="submit" value="Add Team Member" className="btn" />
-          <input type="submit" value="Create Team" className="btn" />
+          <input type="submit" name="addMemBtn"value="Add Team Member" className="btn" />
+          <input type="submit" name="creTeamBtn"value="Create Team" className="btn" />
         </form>
         {this.state.teamName && this.state.teamMembs.length > 0 && (
           <div className="team-table">

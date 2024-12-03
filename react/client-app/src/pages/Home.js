@@ -178,9 +178,9 @@ class Home extends Component {
             )}
           </ul>
         </div>
-        <Link className="link" to="/editor">New Document/Template</Link>
-        <Link className="link" to="/teams">Teams</Link>
-        <Link className="link" to="/editteam">Edit Team</Link>
+        <Link className="link" to="/editor" name="NewDocLink">New Document/Template</Link>
+        <Link className="link" to="/teams" name="TeamLink">Teams</Link>
+        <Link className="link" to="/editteam" name="EditTeamLink">Edit Team</Link>
       </div>
     );
   }
