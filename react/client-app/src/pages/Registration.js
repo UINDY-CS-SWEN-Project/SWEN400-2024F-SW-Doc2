@@ -55,9 +55,11 @@ class Registration extends Component {
       .then(response => response.json())
       .then(data => {
         if (data.message === "User registered successfully!") {
+          localStorage.setItem('username', this.state.username);
+          localStorage.setItem('selectedData', '');
           window.location.replace('/home');
         } 
-        else if (data.message === "Username already exists!!") {
+        else if (data.message === "Username already exists!") {
           alert("Username already exists");
         } 
         else {
