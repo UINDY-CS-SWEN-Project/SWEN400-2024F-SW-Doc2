@@ -137,10 +137,21 @@ def getTeams():
                 all_teams = pickle.load(f)
         except FileNotFoundError:
             return jsonify({"message": "No teams are created!"}), 409
+        
+        print("Got here 1")
+        print(all_teams)
 
         for team in all_teams:
-            if team['username'] == username:
-                curr_teams.append(team)
+            print("For loop")
+            for name in team['MembsUserName']:
+                print(name)
+                print(username)
+                if name == username:
+                    print("append")
+                    curr_teams.append(team)
+                
+        print("Got here 2")
+        print(curr_teams)
 
         return jsonify(curr_teams)
 

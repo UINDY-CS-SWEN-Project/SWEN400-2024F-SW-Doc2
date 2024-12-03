@@ -53,6 +53,7 @@ class Login extends Component {
     .then(data => {
       if (data.success) {  
         localStorage.setItem('username', this.state.username);
+        localStorage.setItem('selectedData', '');
         localStorage.setItem('isAuthenticated', 'true');
         window.location.replace('/home');
       } else {

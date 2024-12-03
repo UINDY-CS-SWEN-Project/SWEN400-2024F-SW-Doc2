@@ -55,6 +55,18 @@ form {
     cursor: pointer;
 }
 
+div > .inlinelink {
+    color: #0E4579;
+    font-family: 'Montserrat light';
+    font-size: 18px;
+    cursor: pointer;
+    display: block;
+    text-decoration: none;
+    margin-top: 20px;
+    margin-right: 10px;
+    display: inline;
+}
+
 .link {
     color: #0E4579;
     font-family: 'Montserrat light';
@@ -63,6 +75,8 @@ form {
     display: block;
     text-decoration: none;
     margin-top: 20px;
+    margin-right: 10px;
+    display: inline;
 }
 
 .link:hover {
