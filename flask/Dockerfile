@@ -5,11 +5,13 @@ ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 WORKDIR /src
 
+
+
 # install dependencies
 RUN pip install --upgrade pip
 COPY requirements.txt /src/requirements.txt
 RUN pip install -r requirements.txt
-
+RUN pip install flask-cors
 # copy project
 #COPY ./app /src
 

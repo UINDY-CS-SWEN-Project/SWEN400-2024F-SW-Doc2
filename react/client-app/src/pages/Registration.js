@@ -1,31 +1,33 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+
 import "./RegistrationForm.css";
 
 class Registration extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: 'Username',
-      password: 'Password',
-      name: 'Name',
-      email: 'Email',
+      username: '',
+      password: '',
+      name: '',
+      email: '',
     };
   }
 
   handleInputChange = (event) => {
     const target = event.target;
-    const value = target.value;
+    let value = target.value;
     const name = target.name;
 
-    if (name === "password") {
-      document.getElementById(name).type = "password";
+    if (name === 'password') {
+      document.getElementById(name).type = 'password';
     }
 
     this.setState({
-      [name]: value
+      [name]: value,
     });
 
-    document.getElementById(name).style.fontFamily = "Montserrat black";
+    document.getElementById(name).style.fontFamily = 'Montserrat black';
   };
 
   setEmptyValue = (event) => {
@@ -35,8 +37,41 @@ class Registration extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    // Submit form logic here
+  
+    const userData = {
+      username: this.state.username,
+      password: this.state.password,
+      name: this.state.name,
+      email: this.state.email,
+    };
+  
+    fetch('http://localhost:9091/api/register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(userData),
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.message === "User registered successfully!") {
+          localStorage.setItem('username', this.state.username);
+          localStorage.setItem('selectedData', '');
+          window.location.replace('/home');
+        } 
+        else if (data.message === "Username already exists!") {
+          alert("Username already exists");
+        } 
+        else {
+          console.log('Registration failed:', data.message);
+          alert("registration failed");
+        }
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
   };
+  
 
   render() {
     return (
@@ -48,9 +83,11 @@ class Registration extends Component {
               type="text"
               id="username"
               name="username"
-              defaultValue={this.state.username}
+              placeholder="Enter your username"
+              value={this.state.username}
               onChange={this.handleInputChange}
               onFocus={this.setEmptyValue}
+              required
               className="text_input"
             />
           </div>
@@ -59,32 +96,38 @@ class Registration extends Component {
               type="text"
               id="name"
               name="name"
-              defaultValue={this.state.name}
+              placeholder="Enter your name"
+              value={this.state.name}
               onChange={this.handleInputChange}
               onFocus={this.setEmptyValue}
+              required
               className="text_input"
             />
           </div>
           <div className="text_area">
             <input
-              type="text"
+              type="password" 
               id="password"
               name="password"
-              defaultValue={this.state.password}
+              placeholder="Enter your password"
+              value={this.state.password}
               onChange={this.handleInputChange}
               onFocus={this.setEmptyValue}
+              required
               className="text_input"
             />
           </div>
           <div className="text_area">
             <input
-              type="text"
+              type="email" 
               id="email"
               name="email"
-              defaultValue={this.state.email}
+              placeholder="Enter your email"
+              value={this.state.email}
               onChange={this.handleInputChange}
               onFocus={this.setEmptyValue}
               className="text_input"
+              required
             />
           </div>
           <input type="submit" value="SIGN UP" className="btn" />

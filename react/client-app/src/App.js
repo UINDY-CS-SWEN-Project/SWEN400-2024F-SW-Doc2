@@ -1,29 +1,35 @@
 import './App.css';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import LoginHome from '../../../../../SWEN400-2024F-SW-Doc2/react/client-app/src/pages/LoginHome'
-import Home from '../../../../../SWEN400-2024F-SW-Doc2/react/client-app/src/pages/Home'
-import Registration from '../../../../../SWEN400-2024F-SW-Doc2/react/client-app/src/pages/Registration'
-import Login from '../../../../../SWEN400-2024F-SW-Doc2/react/client-app/src/pages/Login'
-import PrivateRoutes from './utils/PrivateRoutes'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Home from './pages/Home'; 
+import Registration from './pages/Registration'; 
+import Login from './pages/Login'; 
+import PrivateRoutes from './utils/PrivateRoutes'; 
+import Teams from './pages/Teams';
+import Editor from './pages/Editor';
+import ViewTeams from './pages/ViewTeams';
 import { useEffect } from 'react';
 
 function App() {
   useEffect(() => {
-    // GET request using fetch inside useEffect React hook
     fetch('/api/db')
-        .then((data) => {console.log(data)});
+        .then((response) => response.json()) 
+        .then((data) => { console.log(data); }); 
   }, []);
+
   return (
     <div className="App">
       <Router>
-          <Routes>
-            <Route element={<PrivateRoutes />}>
-                <Route element={<LoginHome/>} path="/home" exact/>
-                <Route element={<Registration/>} path="/registration"/>
-            </Route>
-            <Route element={<Registration/>} path="/registration"/>
-            <Route element={<Login/>} path="/login"/>
-          </Routes>
+        <Routes>
+          <Route element={<PrivateRoutes />}>
+            <Route element={<Home />} path="/home" />
+            <Route element={<Teams />} path="/teams" />
+            <Route element={<Editor />} path="/editor" />
+            <Route element={<ViewTeams />} path="/viewteams" />
+          </Route>
+          <Route element={<Registration />} path="/registration" />
+          <Route element={<Login />} path="/" />
+          <Route element={<Login />} path="/login" />
+        </Routes>
       </Router>
     </div>
   );

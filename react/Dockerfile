@@ -23,6 +23,10 @@ COPY package.json /app/client-app/package.json
 RUN npm i -g npm-check-updates
 RUN npx ncu
 RUN npm install
+RUN npm install ckeditor5
+RUN npm install @ckeditor/ckeditor5-react
+RUN pip install selenium
+
 
 
 # ENV CI=true
