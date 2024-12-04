@@ -101,7 +101,7 @@ class ViewTeams extends Component {
             .catch((error) => {
             console.error('Error:', error);
             });
-            window.location.replace('/viewteams');
+            setTimeout(() => { this.getTeams(); }, 1000)
           }
         
 
@@ -117,7 +117,7 @@ class ViewTeams extends Component {
                 ))}
               </ul>
             ) : (
-              <p>No teams available.</p>
+              <p>You are not a member of any teams.</p>
             )}
           </div>
           <h4>Remove A Member From A Team</h4>

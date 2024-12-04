@@ -149,6 +149,9 @@ def getTeams():
                 if name == username:
                     print("append")
                     curr_teams.append(team)
+                    
+        with open('team_data.pkl', 'wb') as f:
+            pickle.dump(all_teams, f)
                 
         print("Got here 2")
         print(curr_teams)
